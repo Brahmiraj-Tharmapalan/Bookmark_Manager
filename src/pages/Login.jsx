@@ -5,16 +5,19 @@ import google from "../../public/google.svg";
 import linkedIn from "../../public/linkedin.svg";
 import apple from "../../public/apple.svg";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
+
   const toggleForm = () => {
     setIsLogin(!isLogin);
   };
+
   const handleChange = (e) => {
     const { id, value } = e.target;
 
@@ -28,7 +31,41 @@ const Login = () => {
     setFormData(updatedFormData);
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      setError(false);
+
+      const loginData = {
+        username: formData.email,
+        password: formData.password,
+      };
+
+      const response = await axios.post(
+        "https://avantrio-frontend-training.herokuapp.com/api/auth/token/",
+        loginData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setLoading(false);
+
+      if (response.data.success === false) {
+        setError(true);
+        return;
+      }
+      navigate("/dashboard");
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+    }
+  };
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -44,8 +81,6 @@ const Login = () => {
         }
       );
 
-      console.log(response.data);
-
       setLoading(false);
 
       if (response.data.success === false) {
@@ -57,7 +92,7 @@ const Login = () => {
       setError(true);
     }
   };
-  console.log(formData);
+  const handleSubmit = isLogin ? handleLogin : handleSignUp;
   return (
     <div className="flex justify-between items-center px-10 max-sm:pl-0 max-sm:px-1 max-sm:mx-3 pl-40 h-screen">
       <div className="flex flex-1 justify-center max-sm:hidden">
