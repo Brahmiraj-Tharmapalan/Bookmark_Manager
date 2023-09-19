@@ -6,13 +6,19 @@ import linkedIn from "../../public/linkedin.svg";
 import apple from "../../public/apple.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -34,14 +40,11 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError(false);
-
       const loginData = {
         username: formData.email,
         password: formData.password,
       };
-
+      dispatch(signInStart());
       const response = await axios.post(
         "https://avantrio-frontend-training.herokuapp.com/api/auth/token/",
         loginData,
@@ -51,25 +54,21 @@ const Login = () => {
           },
         }
       );
-
-      setLoading(false);
-
+      dispatch(signInSuccess(response.data));
       if (response.data.success === false) {
-        setError(true);
+        dispatch(signInFailure());
         return;
       }
       navigate("/dashboard");
     } catch (error) {
-      setLoading(false);
-      setError(true);
+      dispatch(signInFailure(error));
     }
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError(false);
+      dispatch(signInStart());
 
       const response = await axios.post(
         "https://avantrio-frontend-training.herokuapp.com/api/auth/register/",
@@ -81,15 +80,14 @@ const Login = () => {
         }
       );
 
-      setLoading(false);
+      dispatch(signInSuccess(data));
 
       if (response.data.success === false) {
         setError(true);
         return;
       }
     } catch (error) {
-      setLoading(false);
-      setError(true);
+      dispatch(signInFailure(error));
     }
   };
   const handleSubmit = isLogin ? handleLogin : handleSignUp;
