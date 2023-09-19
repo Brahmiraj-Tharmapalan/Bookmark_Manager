@@ -103,7 +103,7 @@ const Login = () => {
           <h1 className="text-3xl font-semibold text-[#30387D] gilroy">
             {isLogin ? "Login" : "Sign Up"}
           </h1>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-5">
             {isLogin === false && (
               <>
                 <label

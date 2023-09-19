@@ -4,7 +4,7 @@ import avatar from "../../public/avatar.png";
 
 const SearchBar = () => {
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 pt-14 max-lg:pt-0 max-lg:justify-between">
       <div className="flex justify-center items-center">
         <div className="relative">
           <div className="absolute left-0 inset-y-0 flex items-center">
@@ -31,16 +31,13 @@ const SearchBar = () => {
           />
         </div>
       </div>
+      <div className="flex">
       <div className="flex justify-center items-center">
-        {/* <img src={notification} alt="notification"/> */}
         <IoNotifications className="h-10 w-10 p-1 rounded-full bg-white fill-[#6A82FF]" />
       </div>
-      <div className="flex justify-center items-center">
-        <img
-          src={avatar}
-          alt="avatar"
-          className="rounded-full h-11 w-11 p-1 bg-white"
-        />
+      <div className="flex justify-center items-center h-11 w-11 p-1">
+        <img src={avatar} alt="avatar" className="rounded-full bg-white" />
+      </div>
       </div>
     </div>
   );
