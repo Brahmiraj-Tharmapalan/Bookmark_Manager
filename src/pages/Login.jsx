@@ -4,6 +4,7 @@ import facebook from "../../public/facebook.svg";
 import google from "../../public/google.svg";
 import linkedIn from "../../public/linkedin.svg";
 import apple from "../../public/apple.svg";
+import axios from "axios";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -15,7 +16,16 @@ const Login = () => {
     setIsLogin(!isLogin);
   };
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    const { id, value } = e.target;
+
+    const updatedFormData = { ...formData };
+    if (id === "first_name") {
+      updatedFormData["last_name"] = value;
+    } else if (id === "password") {
+      updatedFormData["confirm_password"] = value;
+    }
+    updatedFormData[id] = value;
+    setFormData(updatedFormData);
   };
 
   const handleSubmit = async (e) => {
@@ -23,26 +33,31 @@ const Login = () => {
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      console.log(data);
+
+      const response = await axios.post(
+        "https://avantrio-frontend-training.herokuapp.com/api/auth/register/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
+
       setLoading(false);
-      if (data.success === false) {
+
+      if (response.data.success === false) {
         setError(true);
         return;
       }
-      navigate("/sign-in");
     } catch (error) {
       setLoading(false);
       setError(true);
     }
   };
+  console.log(formData);
   return (
     <div className="flex justify-between items-center px-10 max-sm:pl-0 max-sm:px-1 max-sm:mx-3 pl-40 h-screen">
       <div className="flex flex-1 justify-center max-sm:hidden">
@@ -67,7 +82,7 @@ const Login = () => {
                 <input
                   type="text"
                   placeholder="Your name here"
-                  id="username"
+                  id="first_name"
                   className="bg-slate-100 p-3 rounded-lg ring-1 ring-gray-500 hover:placeholder:text-[#30387D] placeholder:italic"
                   onChange={handleChange}
                 />
