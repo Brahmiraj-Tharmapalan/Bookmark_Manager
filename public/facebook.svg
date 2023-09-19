@@ -1,0 +1,19 @@
+<svg width="66" height="60" viewBox="0 0 66 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1000002384">
+<rect id="Rectangle 5" x="0.5" y="0.5" width="65" height="59" rx="19.5" fill="white" stroke="#DADADA"/>
+<g id="Group 2">
+<g id="Social">
+<g id="Facebook">
+<circle id="bg" cx="33" cy="30" r="14" fill="url(#paint0_linear_104_1983)"/>
+<path id="f" d="M38.2137 34.2816L38.8356 30.3301H34.9452V27.767C34.9452 26.6857 35.4877 25.6311 37.2302 25.6311H39V22.267C39 22.267 37.3945 22 35.8603 22C32.6548 22 30.5617 23.8929 30.5617 27.3184V30.3301H27V34.2816H30.5617V43.8345C31.2767 43.944 32.0082 44 32.7534 44C33.4986 44 34.2302 43.944 34.9452 43.8345V34.2816H38.2137Z" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_104_1983" x1="33" y1="16" x2="33" y2="44" gradientUnits="userSpaceOnUse">
+<stop stop-color="#18ACFE"/>
+<stop offset="1" stop-color="#0163E0"/>
+</linearGradient>
+</defs>
+</svg>
