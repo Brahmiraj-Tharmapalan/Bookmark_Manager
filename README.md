@@ -1,8 +1,7 @@
-# React + Vite
+# Bookmark manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. completed the user registration and login with Tokan and protected route.
+2. In collection and links completed, the post get and delete function.
+3. Make a responsive web application. It looks good on mobile, too.
+4. It is best that I make the design that I got in Figma.
+5. All the data in this application is running through Redux, so all the data flows are excellent.
