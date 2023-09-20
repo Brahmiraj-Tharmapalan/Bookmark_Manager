@@ -6,7 +6,7 @@ import {
   addCollectionStart,
   addCollectionSuccess,
   addCollectionFailure,
-} from "../redux/collection/collectionSlice.js";
+} from "../../redux/collection/collectionSlice.js";
 
 const AddCollection = () => {
   const [selectedColor, setSelectedColor] = useState("#FF85CE");

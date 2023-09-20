@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import HomeSidebar from "../components/HomeSidebar";
-import Home from "../components/Home";
+import React from "react";
+import Home from "../components/dashboard/Home";
+import HomeSidebar from "../components/dashboard/HomeSidebar";
 import tick from "../../public/tick.svg";
 import emoji from "../../public/Emoji.svg";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import movieIcon from "../../public/movie.svg";
-import songIcon from "../../public/song.svg";
-import bookIcon from "../../public/book.svg";
-import documentIcon from "../../public/document.svg";
-import savingIcon from "../../public/saving.svg";
-import jobsIcon from "../../public/job.svg";
+import movieIcon from "../../../public/movie.svg";
+import songIcon from "../../../public/song.svg";
+import bookIcon from "../../../public/book.svg";
+import documentIcon from "../../../public/document.svg";
+import savingIcon from "../../../public/saving.svg";
+import jobsIcon from "../../../public/job.svg";
 
-const Card = ({ icon, name, onDelete, onFav, fav }) => {
+const Card = ({ icon, name, onDelete, onFav, fav, onLinkNavigate }) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const modalRef = useRef(null);
 
@@ -42,7 +42,7 @@ const Card = ({ icon, name, onDelete, onFav, fav }) => {
 
   return (
     <div className="bg-white p-3 rounded-2xl flex px-5 w-48 max-xl:w-40 justify-between">
-      <div className="pl-8 max-xl:pl-4">
+      <div className="pl-8 max-xl:pl-4 cursor-pointer" onClick={onLinkNavigate}>
         <div>
           <img src={iconImage} alt={name} />
         </div>

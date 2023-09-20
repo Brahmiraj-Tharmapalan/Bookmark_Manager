@@ -1,19 +1,22 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import LinkHeader from "./LinkHeader";
-import LinkSection from "./LinkSection";
 import { useSelector } from "react-redux";
-import SearchBar from "./SearchBar";
+import LinkHeader from "./LinkHeader";
+import SearchBar from "../SearchBar";
+import LinkSection from "./LinkSection";
 
 const Links = () => {
   const { loading, error } = useSelector((state) => state.user);
+  const cardDetail = useSelector((state) => state.link.cardDetail);
 
   return (
     <div className="max-sm:px-5 pl-20 py-5 w-full">
       <div className="poppins font-semibold text-xl flex max-lg:justify-center">
-        Movies
+        {cardDetail.cardName}
       </div>
-      <div className="justify-center max-lg:inline hidden"><SearchBar/></div>
+      <div className="justify-center max-lg:inline hidden">
+        <SearchBar />
+      </div>
       <div>
         <button
           disabled={loading}
@@ -30,13 +33,13 @@ const Links = () => {
         </button>
       </div>
       <div className="bg-white rounded-2xl shadow-lg p-5">
-      <div>
-        <LinkHeader />
+        <div>
+          <LinkHeader />
+        </div>
+        <div>
+          <LinkSection />
+        </div>
       </div>
-      <div>
-        <LinkSection />
-      </div>
-    </div>
     </div>
   );
 };

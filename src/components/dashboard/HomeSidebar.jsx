@@ -1,6 +1,6 @@
 import React from "react";
 import AddCollection from "./AddCollection";
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar";
 
 const HomeSidebar = () => {
   return (

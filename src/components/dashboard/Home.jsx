@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
+import React, { useEffect } from "react";
+import SearchBar from "../SearchBar";
 import Card from "./Card";
-import SearchBar from "./SearchBar";
+import { AiOutlinePlus } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCollectionFailure,
   getCollectionSuccess,
-} from "../redux/collection/collectionSlice";
+} from "../../redux/collection/collectionSlice";
+import { useNavigate } from "react-router-dom";
+import { navigateSection } from "../../redux/links/linkSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const accessToken = useSelector((state) => state.user);
   const Collection = useSelector((state) => state.collection.collections);
 
@@ -36,7 +38,6 @@ const Home = () => {
   useEffect(() => {
     fetchAllCollection();
   });
-  //need to start rerender
 
   const deleteCollection = (cardId) => {
     const config = {
@@ -53,9 +54,8 @@ const Home = () => {
         console.error("Error deleting collection:", error);
       });
   };
-  const favCollection = (cardId, name, icon, color, isFavourite) => {
+  const favCollection = (cardId, name, icon, color) => {
     const data = {
-      user: "d56efe24-b30c-4ac5-93bc-c66759c5e3df",
       name: name,
       icon: icon,
       color: color,
@@ -80,9 +80,8 @@ const Home = () => {
         console.error("Error deleting collection:", error);
       });
   };
-  const favCollectionRemove = (cardId, name, icon, color, isFavourite) => {
+  const favCollectionRemove = (cardId, name, icon, color) => {
     const data = {
-      user: "d56efe24-b30c-4ac5-93bc-c66759c5e3df",
       name: name,
       icon: icon,
       color: color,
@@ -106,6 +105,17 @@ const Home = () => {
       .catch((error) => {
         console.error("Error deleting collection:", error);
       });
+  };
+
+  const onLinkNav = (cardId, cardName, cardIcon, cardFav) => {
+    const cardDetail = {
+      cardId: cardId,
+      cardName: cardName,
+      cardIcon: cardIcon,
+      cardFav: cardFav,
+    };
+    dispatch(navigateSection(cardDetail));
+    navigate("/section");
   };
 
   return (
@@ -158,6 +168,14 @@ const Home = () => {
                         data.is_favourite
                       )
                     }
+                    onLinkNavigate={() =>
+                      onLinkNav(
+                        data.id,
+                        data.name,
+                        data.icon,
+                        data.is_favourite
+                      )
+                    }
                   />
                 </div>
               )
@@ -194,6 +212,14 @@ const Home = () => {
                           data.name,
                           data.icon,
                           data.color,
+                          data.is_favourite
+                        )
+                      }
+                      onLinkNavigate={() =>
+                        onLinkNav(
+                          data.id,
+                          data.name,
+                          data.icon,
                           data.is_favourite
                         )
                       }
@@ -235,6 +261,9 @@ const Home = () => {
                     data.color,
                     data.is_favourite
                   )
+                }
+                onLinkNavigate={() =>
+                  onLinkNav(data.id, data.name, data.icon, data.is_favourite)
                 }
               />
             </div>
