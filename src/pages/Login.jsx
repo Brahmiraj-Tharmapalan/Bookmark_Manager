@@ -12,13 +12,14 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.user);
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -44,24 +45,32 @@ const Login = () => {
         username: formData.email,
         password: formData.password,
       };
+
+      const config = {
+        method: "post",
+        url: "https://avantrio-frontend-training.herokuapp.com/api/auth/token/",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: loginData,
+      };
+
       dispatch(signInStart());
-      const response = await axios.post(
-        "https://avantrio-frontend-training.herokuapp.com/api/auth/token/",
-        loginData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+
+      const response = await axios(config);
+
+      notify("Login successful", "success");
       dispatch(signInSuccess(response.data));
+
       if (response.data.success === false) {
         dispatch(signInFailure());
         return;
       }
+
       navigate("/dashboard");
     } catch (error) {
       dispatch(signInFailure(error));
+      notify("Login failed", "error");
     }
   };
 
@@ -70,27 +79,42 @@ const Login = () => {
     try {
       dispatch(signInStart());
 
-      const response = await axios.post(
-        "https://avantrio-frontend-training.herokuapp.com/api/auth/register/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const config = {
+        method: "post",
+        url: "https://avantrio-frontend-training.herokuapp.com/api/auth/register/",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: formData,
+      };
 
-      dispatch(signInSuccess(data));
+      const response = await axios(config);
+
+      notify("Registration successful", "success");
+      setIsLogin(true);
+      dispatch(signInSuccess(response.data));
 
       if (response.data.success === false) {
-        setError(true);
         return;
       }
     } catch (error) {
       dispatch(signInFailure(error));
+      notify("Registration failed", "error");
     }
   };
+
   const handleSubmit = isLogin ? handleLogin : handleSignUp;
+
+  const notify = (message, type) => {
+    const options = {
+      position: "top-left",
+    };
+    if (type === "success") {
+      toast.success(message, options);
+    } else if (type === "error") {
+      toast.error(message, options);
+    }
+  };
   return (
     <div className="flex justify-between items-center px-10 max-sm:pl-0 max-sm:px-1 max-sm:mx-3 pl-40 h-screen">
       <div className="flex flex-1 justify-center max-sm:hidden">
@@ -188,9 +212,6 @@ const Login = () => {
               {isLogin ? "Sign Up" : "Login"}
             </div>
           </div>
-          <p className="text-red-700 mt-5">
-            {error && "Something went wrong!"}
-          </p>
         </div>
       </div>
     </div>

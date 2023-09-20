@@ -4,13 +4,25 @@ import avatar from "../../public/avatar.png";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { signOut } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const handleSignOut = () => {
+    notify("logout successfull", "success");
     dispatch(signOut());
   };
-
+  const notify = (message, type) => {
+    const options = {
+      position: "top-left",
+    };
+    if (type === "success") {
+      toast.success(message, options);
+    } else if (type === "error") {
+      toast.error(message, options);
+    }
+  };
   return (
     <div className="flex gap-3 pt-14 max-lg:pt-0 max-lg:justify-between">
       <div className="flex justify-center items-center">

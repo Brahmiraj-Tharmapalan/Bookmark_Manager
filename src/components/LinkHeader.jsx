@@ -1,7 +1,7 @@
 import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import video from "../../public/video.svg";
+import movie from "../../public/movie.svg";
 
 const LinkHeader = () => {
   return (

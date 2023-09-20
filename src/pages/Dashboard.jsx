@@ -3,12 +3,15 @@ import HomeSidebar from "../components/HomeSidebar";
 import Home from "../components/Home";
 import tick from "../../public/tick.svg";
 import emoji from "../../public/Emoji.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { addCollectionFailure } from "../redux/collection/collectionSlice";
 
 const Dashboard = () => {
-  const [modalMessage, setIsModalMessage] = useState(true);
+  const { loadingModal } = useSelector((state) => state.collection);
+  const dispatch = useDispatch();
 
   const toggleModal = () => {
-    setIsModalMessage(!modalMessage);
+    dispatch(addCollectionFailure());
   };
 
   return (
@@ -19,7 +22,7 @@ const Dashboard = () => {
       <div className="flex top-0 right-0 h-full p-10">
         <HomeSidebar />
       </div>
-      {modalMessage && (
+      {loadingModal && (
         <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10 max-lg:p-2">
           <div className="max-h-full w-full max-w-xl overflow-y-auto rounded-2xl bg-white">
             <div className="w-full">
