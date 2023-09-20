@@ -1,9 +1,15 @@
 import React from "react";
 import { IoNotifications } from "react-icons/io5";
 import avatar from "../../public/avatar.png";
-import { RiLogoutCircleLine } from 'react-icons/ri';
+import { RiLogoutCircleLine } from "react-icons/ri";
+import { signOut } from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const SearchBar = () => {
+  const dispatch = useDispatch();
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
 
   return (
     <div className="flex gap-3 pt-14 max-lg:pt-0 max-lg:justify-between">
@@ -43,8 +49,9 @@ const SearchBar = () => {
         <div>
           <div
             className="flex justify-center items-center p-1"
+            onClick={handleSignOut}
           >
-            <RiLogoutCircleLine className="h-9 w-9 p-1 rounded-full bg-white fill-[#6A82FF] hover:fill-white hover:bg-[#6A82FF]"/>
+            <RiLogoutCircleLine className="h-9 w-9 p-1 rounded-full bg-white fill-[#6A82FF] hover:fill-white hover:bg-[#6A82FF]" />
           </div>
         </div>
       </div>
