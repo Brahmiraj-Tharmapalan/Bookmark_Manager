@@ -12,13 +12,7 @@ const LinkCard = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const openModal = (event) => {
-    const iconPosition = event.currentTarget.getBoundingClientRect();
-
-    const top = iconPosition.bottom + window.scrollY + 10;
-    const left = iconPosition.left + window.scrollX;
-
-    setModalPosition({ top, left });
+  const openModal = () => {
     setIsModalOpen(true);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import movieIcon from "../../public/movie.svg";
@@ -8,11 +8,28 @@ import documentIcon from "../../public/document.svg";
 import savingIcon from "../../public/saving.svg";
 import jobsIcon from "../../public/job.svg";
 
-const Card = ({ icon, name }) => {
-  const [Favourite, setFavourite] = useState(false);
-  const handleFavClick = () => {
-    setFavourite(!Favourite)
-  }
+const Card = ({ icon, name, onDelete, onFav, fav }) => {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const modalRef = useRef(null);
+
+  const toggleDeleteOption = () => {
+    setIsDeleteOpen(!isDeleteOpen);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsDeleteOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const iconList = {
     movie: movieIcon,
     song: songIcon,
@@ -32,8 +49,29 @@ const Card = ({ icon, name }) => {
         <div className="flex justify-center items-center">{name}</div>
       </div>
       <div className="flex flex-col justify-between">
-        <BsThreeDots />
-        <AiFillHeart className={`${Favourite ? "fill-red-400" : "fill-[#6A82FF2E]"} cursor-pointer`} onClick={handleFavClick}/>
+        <div className="relative">
+          <BsThreeDots
+            onClick={toggleDeleteOption}
+            className="cursor-pointer"
+          />
+          {isDeleteOpen && (
+            <div className="absolute top-0 right-0 mt-2 mr-2">
+              <div
+                className="bg-white p-2 rounded-lg border shadow-md cursor-pointer"
+                ref={modalRef}
+                onClick={onDelete}
+              >
+                <span>Delete</span>
+              </div>
+            </div>
+          )}
+        </div>
+        <AiFillHeart
+          className={`${
+            fav ? "fill-red-400" : "fill-[#6A82FF2E]"
+          } cursor-pointer`}
+          onClick={onFav}
+        />
       </div>
     </div>
   );

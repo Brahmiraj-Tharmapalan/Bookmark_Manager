@@ -7,7 +7,7 @@ const LinkHeader = () => {
   return (
     <div className="flex gap-5">
       <div>
-        <img src={video} alt="" />
+        <img src={movie} alt="" />
       </div>
       <div className="flex flex-col justify-between py-3">
         <div>Movies</div>

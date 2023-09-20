@@ -6,7 +6,6 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCollectionFailure,
-  getCollectionStart,
   getCollectionSuccess,
 } from "../redux/collection/collectionSlice";
 
@@ -37,6 +36,78 @@ const Home = () => {
   useEffect(() => {
     fetchAllCollection();
   });
+  //need to start rerender
+
+  const deleteCollection = (cardId) => {
+    const config = {
+      method: "DELETE",
+      url: `https://avantrio-frontend-training.herokuapp.com/api/collections/${cardId}/`,
+      headers: {
+        Authorization: `Bearer ${accessToken.currentUser.data.access}`,
+      },
+    };
+
+    axios(config)
+      .then((response) => {})
+      .catch((error) => {
+        console.error("Error deleting collection:", error);
+      });
+  };
+  const favCollection = (cardId, name, icon, color, isFavourite) => {
+    const data = {
+      user: "d56efe24-b30c-4ac5-93bc-c66759c5e3df",
+      name: name,
+      icon: icon,
+      color: color,
+      is_favourite: true,
+    };
+
+    const config = {
+      method: "PUT",
+      url: `https://avantrio-frontend-training.herokuapp.com/api/collections/${cardId}/`,
+      headers: {
+        Authorization: `Bearer ${accessToken.currentUser.data.access}`,
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(data),
+    };
+
+    axios(config)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error deleting collection:", error);
+      });
+  };
+  const favCollectionRemove = (cardId, name, icon, color, isFavourite) => {
+    const data = {
+      user: "d56efe24-b30c-4ac5-93bc-c66759c5e3df",
+      name: name,
+      icon: icon,
+      color: color,
+      is_favourite: false,
+    };
+
+    const config = {
+      method: "PUT",
+      url: `https://avantrio-frontend-training.herokuapp.com/api/collections/${cardId}/`,
+      headers: {
+        Authorization: `Bearer ${accessToken.currentUser.data.access}`,
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(data),
+    };
+
+    axios(config)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error deleting collection:", error);
+      });
+  };
+
   return (
     <div className="max-sm:px-5 px-20 py-4 w-full">
       <div className="poppins font-semibold text-xl flex max-lg:justify-center">
@@ -70,10 +141,24 @@ const Home = () => {
         </div>
         <div className="grid max-md:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 gap-16 max-md:gap-5 ">
           {Collection.map(
-            (data) =>
+            (data, index) =>
               data.is_favourite === true && (
-                <div key={data.id}>
-                  <Card name={data.name} icon={data.icon} />
+                <div key={index}>
+                  <Card
+                    name={data.name}
+                    icon={data.icon}
+                    fav={data.is_favourite}
+                    onDelete={() => deleteCollection(data.id)}
+                    onFav={() =>
+                      favCollectionRemove(
+                        data.id,
+                        data.name,
+                        data.icon,
+                        data.color,
+                        data.is_favourite
+                      )
+                    }
+                  />
                 </div>
               )
           )}
@@ -94,11 +179,28 @@ const Home = () => {
             </div>
           </div>
           <div className="grid max-md:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 gap-16 max-md:gap-5 ">
-            {Collection.map((data) => (
-              <div key={data.id}>
-                <Card name={data.name} icon={data.icon} />
-              </div>
-            ))}
+            {Collection.map(
+              (data, index) =>
+                data.is_favourite === false && (
+                  <div key={index}>
+                    <Card
+                      name={data.name}
+                      icon={data.icon}
+                      fav={data.is_favourite}
+                      onDelete={() => deleteCollection(data.id)}
+                      onFav={() =>
+                        favCollection(
+                          data.id,
+                          data.name,
+                          data.icon,
+                          data.color,
+                          data.is_favourite
+                        )
+                      }
+                    />
+                  </div>
+                )
+            )}
           </div>
         </div>
       </div>
@@ -118,14 +220,25 @@ const Home = () => {
           </div>
         </div>
         <div className="grid max-md:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 gap-16 max-md:gap-5 ">
-          {Collection.map(
-            (data) =>
-              data.is_favourite === false && (
-                <div key={data.id}>
-                  <Card name={data.name} icon={data.icon} />
-                </div>
-              )
-          )}
+          {Collection.map((data, index) => (
+            <div key={index}>
+              <Card
+                name={data.name}
+                icon={data.icon}
+                fav={data.is_favourite}
+                onDelete={() => deleteCollection(data.id)}
+                onFav={() =>
+                  favCollection(
+                    data.id,
+                    data.name,
+                    data.icon,
+                    data.color,
+                    data.is_favourite
+                  )
+                }
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

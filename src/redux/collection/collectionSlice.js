@@ -25,9 +25,6 @@ const collectionSlice = createSlice({
       state.error = action.payload;
       state.loadingModal = false;
     },
-    // getCollectionStart: (state) => {
-    //   state.loadingModal = true;
-    // },
     getCollectionSuccess: (state, action) => {
       state.collections = action.payload;
       state.loading = false;
