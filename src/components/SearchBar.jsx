@@ -1,8 +1,10 @@
 import React from "react";
 import { IoNotifications } from "react-icons/io5";
 import avatar from "../../public/avatar.png";
+import { RiLogoutCircleLine } from 'react-icons/ri';
 
 const SearchBar = () => {
+
   return (
     <div className="flex gap-3 pt-14 max-lg:pt-0 max-lg:justify-between">
       <div className="flex justify-center items-center">
@@ -32,12 +34,19 @@ const SearchBar = () => {
         </div>
       </div>
       <div className="flex">
-      <div className="flex justify-center items-center">
-        <IoNotifications className="h-10 w-10 p-1 rounded-full bg-white fill-[#6A82FF]" />
-      </div>
-      <div className="flex justify-center items-center h-11 w-11 p-1">
-        <img src={avatar} alt="avatar" className="rounded-full bg-white" />
-      </div>
+        <div className="flex justify-center items-center">
+          <IoNotifications className="h-10 w-10 p-1 rounded-full bg-white fill-[#6A82FF] hover:fill-white hover:bg-[#6A82FF]" />
+        </div>
+        <div className="flex justify-center items-center h-11 w-11 p-1">
+          <img src={avatar} alt="avatar" className="rounded-full bg-white" />
+        </div>
+        <div>
+          <div
+            className="flex justify-center items-center p-1"
+          >
+            <RiLogoutCircleLine className="h-9 w-9 p-1 rounded-full bg-white fill-[#6A82FF] hover:fill-white hover:bg-[#6A82FF]"/>
+          </div>
+        </div>
       </div>
     </div>
   );
