@@ -13,7 +13,6 @@ const LinkSection = () => {
   const accessToken = useSelector((state) => state.user);
   const cardId = useSelector((state) => state.link.cardDetail.cardId);
   const Links = useSelector((state) => state.link.links);
-  console.log(Links);
 
   const fetchAllCollection = () => {
     const config = {

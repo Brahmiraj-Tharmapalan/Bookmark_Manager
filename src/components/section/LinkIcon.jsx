@@ -10,8 +10,6 @@ const LinkIcon = () => {
   const accessToken = useSelector((state) => state.user);
   const cardId = useSelector((state) => state.link.cardDetail.cardId);
   const linkId = useSelector((state) => state.link.LinkDetails.linkId);
-  console.log(cardId);
-  console.log(linkId);
 
   const deleteCollection = () => {
     const config = {
