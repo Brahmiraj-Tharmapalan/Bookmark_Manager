@@ -3,12 +3,15 @@ import SectionSidebar from "../components/section/SectionSidebar";
 import Links from "../components/section/Links";
 import tick from "../../public/tick.svg";
 import emoji from "../../public/Emoji.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { addLinksFailure } from "../redux/links/linkSlice";
 
 const Section = () => {
-  const [modalMessage, setIsModalMessage] = useState(false);
+  const { loadingModal } = useSelector((state) => state.link);
+  const dispatch = useDispatch();
 
   const toggleModal = () => {
-    setIsModalMessage(!modalMessage);
+    dispatch(addLinksFailure());
   };
   return (
     <div className="flex flex-1 max-lg:flex-col">
@@ -18,7 +21,7 @@ const Section = () => {
       <div className="flex top-0 right-0 h-full p-10 max-lg:w-full max-lg:justify-center">
         <SectionSidebar />
       </div>
-      {modalMessage && (
+      {loadingModal && (
         <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10 max-lg:p-2">
           <div className="max-h-full w-full max-w-xl overflow-y-auto rounded-2xl bg-white">
             <div className="w-full">
