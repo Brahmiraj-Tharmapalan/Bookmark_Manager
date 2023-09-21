@@ -10,7 +10,7 @@ import {
 
 const AddCollection = () => {
   const [selectedColor, setSelectedColor] = useState("#FF85CE");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ collectionName: "" });
   const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -33,6 +33,7 @@ const AddCollection = () => {
   const icon = iconList[selectedColor];
 
   const handleCreateCollection = (e) => {
+    setFormData({ collectionName: "" });
     e.preventDefault();
 
     const collectionData = {
@@ -82,6 +83,7 @@ const AddCollection = () => {
             Collection Name
           </label>
           <input
+            value={formData.collectionName}
             type="text"
             placeholder="Collection name here"
             id="collectionName"
